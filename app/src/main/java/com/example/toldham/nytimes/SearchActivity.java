@@ -1,5 +1,6 @@
 package com.example.toldham.nytimes;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -39,6 +41,22 @@ public class SearchActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setupViews();
+
+        //Hook up grid listener
+        gvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // create intents
+                Intent intent = new Intent(getApplicationContext(), ArticleActivity.class);
+                // get article
+                Article article = articles.get(position);
+                // pass article
+                intent.putExtra("url", article.getWebUrl());
+                // display article
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void setupViews() {
