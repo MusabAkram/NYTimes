@@ -30,6 +30,7 @@ public class SearchActivity extends AppCompatActivity {
     Button btnSearch;
 
     ArrayList<Article> articles;
+    ArticleArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,8 @@ public class SearchActivity extends AppCompatActivity {
         gvResults = (GridView) findViewById(R.id.gvResults);
         btnSearch = (Button) findViewById(R.id.btnSearch);
         articles = new ArrayList<>();
+        adapter = new ArticleArrayAdapter(this, articles);
+        gvResults.setAdapter(adapter);
     }
 
     @Override
@@ -93,7 +96,8 @@ public class SearchActivity extends AppCompatActivity {
                 try {
                     articleJsonResults = response.getJSONObject("response").getJSONArray("docs");
                     //Log.d("DEBUG", response.toString());
-                    articles.addAll(Article.fromJSONArray(articleJsonResults));
+                    adapter.addAll(Article.fromJSONArray(articleJsonResults));
+                    //adapter.notifyDataSetChanged();
                     Log.d("DEBUG", articles.toString());
                 } catch (JSONException e){
                         e.printStackTrace();
