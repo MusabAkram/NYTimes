@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 public class ArticleActivity extends AppCompatActivity {
 
@@ -14,10 +15,17 @@ public class ArticleActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        String url = getIntent().getStringExtra("url");
-
+        Article article = (Article) getIntent().getSerializableExtra("article");
         WebView webView = (WebView) findViewById(R.id.wvArticle);
-        webView.loadUrl(url);
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
+
+        webView.loadUrl(article.getWebUrl());
     }
 
 }

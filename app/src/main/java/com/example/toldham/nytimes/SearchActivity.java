@@ -51,7 +51,7 @@ public class SearchActivity extends AppCompatActivity {
                 // get article
                 Article article = articles.get(position);
                 // pass article
-                intent.putExtra("url", article.getWebUrl());
+                intent.putExtra("article", article);
                 // display article
                 startActivity(intent);
             }
