@@ -2,6 +2,7 @@ package com.example.toldham.nytimes;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -30,6 +31,7 @@ public class SearchActivity extends AppCompatActivity {
     EditText etQuery;
     GridView gvResults;
     Button btnSearch;
+    Button btnFilter;
 
     ArrayList<Article> articles;
     ArticleArrayAdapter adapter;
@@ -40,7 +42,21 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar(); // or getActionBar();
+        getSupportActionBar().setTitle("New York Times Search"); // set the top title
+        String title = actionBar.getTitle().toString();
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.ic_times);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
         setupViews();
+
+        //gvResults.setOnScrollListener(new EndlessRecyclerViewScrollListener() {
+            //@Override
+            //public boolean onLoadMore(int page, int totalItemsCount) {
+                //customLoadMore(page);
+                //return true;
+            //}
+        //});
 
         //Hook up grid listener
         gvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -57,6 +73,25 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void customLoadMore(int offset){
+        String query = etQuery.getText().toString();
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        String url = "http://api.nytimes.com/svc/search/v2/articlesearch.json";
+        Log.v("stuff", url);
+
+        RequestParams params = new RequestParams();
+        params.put("api-key", "8510b204c17d4582abacf3afb9be55e5");
+        params.put("page", offset);
+        params.put("q", query);
+
+    }
+
+
+    public void onSettingsClick(MenuItem mi) {
+            // handle click her
     }
 
     public void setupViews() {
@@ -122,5 +157,10 @@ public class SearchActivity extends AppCompatActivity {
                     }
             }
         } );
+    }
+
+    public void onFilter(View view) {
+        Intent intent = new Intent(getApplicationContext(), FilterActivity.class);
+        startActivity(intent);
     }
 }

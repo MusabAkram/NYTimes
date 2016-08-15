@@ -29,16 +29,27 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/btnSearch"
-        android:layout_toStartOf="@+id/btnSearch"
-        android:hint="@string/hint" />
+        android:layout_toStartOf="@+id/btnFilter"
+        android:hint="@string/hint"
+        android:layout_toLeftOf="@+id/btnFilter" />
 
     <GridView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/gvResults"
+        android:numColumns="4"
         android:layout_below="@+id/btnSearch"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:numColumns="4" />
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Filter"
+        android:id="@+id/btnFilter"
+        android:onClick="onFilter"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/btnSearch"
+        android:layout_toStartOf="@+id/btnSearch" />
 </RelativeLayout>
